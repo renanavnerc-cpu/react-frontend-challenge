@@ -13,13 +13,14 @@ import type { MoviesFilters } from "../types/filters";
 
 interface Props {
   onChange: (filters: MoviesFilters) => void;
+  initialFilters?: MoviesFilters;
 }
 
-export const MovieFilters = ({ onChange }: Props) => {
-  const [search, setSearch] = useState("");
-  const [genre, setGenre] = useState("");
-  const [year, setYear] = useState("");
-  const [rating, setRating] = useState("");
+export const MovieFilters = ({ onChange, initialFilters }: Props) => {
+  const [search, setSearch] = useState(initialFilters?.search ?? "");
+  const [genre, setGenre] = useState(initialFilters?.genre ?? "");
+  const [year, setYear] = useState(initialFilters?.year ?? "");
+  const [rating, setRating] = useState(initialFilters?.rating ?? "");
 
   const debouncedSearch = useDebounce(search, 500);
 
@@ -47,12 +48,16 @@ export const MovieFilters = ({ onChange }: Props) => {
         onChange={(e) => setSearch(e.target.value)}
       />
 
-      <Select onValueChange={setGenre}>
+      <Select
+        value={genre || "all"}
+        onValueChange={(value) => setGenre(value === "all" ? "" : value)}
+      >
         <SelectTrigger>
           <SelectValue placeholder="Gênero" />
         </SelectTrigger>
 
         <SelectContent>
+          <SelectItem value="all">Todos</SelectItem>
           <SelectItem value="28">Ação</SelectItem>
           <SelectItem value="35">Comédia</SelectItem>
           <SelectItem value="18">Drama</SelectItem>
@@ -61,12 +66,16 @@ export const MovieFilters = ({ onChange }: Props) => {
         </SelectContent>
       </Select>
 
-      <Select onValueChange={setYear}>
+      <Select
+        value={year || "all"}
+        onValueChange={(value) => setYear(value === "all" ? "" : value)}
+      >
         <SelectTrigger>
           <SelectValue placeholder="Ano" />
         </SelectTrigger>
 
         <SelectContent>
+          <SelectItem value="all">Todos</SelectItem>
           <SelectItem value="2024">2024</SelectItem>
           <SelectItem value="2023">2023</SelectItem>
           <SelectItem value="2022">2022</SelectItem>
@@ -75,12 +84,16 @@ export const MovieFilters = ({ onChange }: Props) => {
         </SelectContent>
       </Select>
 
-      <Select onValueChange={setRating}>
+      <Select
+        value={rating || "all"}
+        onValueChange={(value) => setRating(value === "all" ? "" : value)}
+      >
         <SelectTrigger>
           <SelectValue placeholder="Rating" />
         </SelectTrigger>
 
         <SelectContent>
+          <SelectItem value="all">Todos</SelectItem>
           <SelectItem value="7">7+</SelectItem>
           <SelectItem value="8">8+</SelectItem>
           <SelectItem value="9">9+</SelectItem>

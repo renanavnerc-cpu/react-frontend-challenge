@@ -1,25 +1,26 @@
-import { useMemo, useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { useMovies } from "../hooks/use-movies";
 import { MoviesList } from "../components/movies-list";
 import { MoviesSkeleton } from "../components/movies-skeleton";
 import { MovieFilters } from "../components/movie-filters";
 import type { MoviesFilters } from "../types/filters";
+import { useMoviesFiltersStore } from "../store/movies-filters-store";
 
 export const Dashboard = () => {
   const [page, setPage] = useState(1);
-  const [filters, setFilters] = useState<MoviesFilters>({});
+  const filters = useMoviesFiltersStore((state) => state.filters);
+  const setFilters = useMoviesFiltersStore((state) => state.setFilters);
+  const hasHydrated = useMoviesFiltersStore((state) => state.hasHydrated);
 
-  const memoFilters = useMemo(() => filters, [filters]);
-
-  const { data, isLoading, isError } = useMovies(page, memoFilters);
+  const { data, isLoading, isError } = useMovies(page, filters);
 
   const handleFiltersChange = useCallback((newFilters: MoviesFilters) => {
     setPage(1);
     setFilters(newFilters);
-  }, []);
+  }, [setFilters]);
 
-  if (isLoading) return <MoviesSkeleton />;
+  if (!hasHydrated || isLoading) return <MoviesSkeleton />;
 
   if (isError)
     return <div className="text-center py-10">Erro ao carregar filmes</div>;
@@ -28,7 +29,7 @@ export const Dashboard = () => {
     <div className="space-y-6">
       <h1 className="text-3xl font-bold">🎬 Trending Movies</h1>
 
-      <MovieFilters onChange={handleFiltersChange} />
+      <MovieFilters onChange={handleFiltersChange} initialFilters={filters} />
 
       <MoviesList movies={data?.results || []} />
 
