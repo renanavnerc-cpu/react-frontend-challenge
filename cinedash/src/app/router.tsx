@@ -7,14 +7,13 @@ import { RootLayout } from "./root-layout";
 import { LoginPage } from "@/features/auth/pages/login-page";
 import { Dashboard } from "@/features/movies/pages/dashboard";
 import { NotFound } from "@/shared/pages/not-found";
+import { MovieDetailsPage } from "@/features/movies/pages/movie-details";
 
-// RootRoute usando RootLayout
 const rootRoute = createRootRoute({
   component: RootLayout,
   notFoundComponent: NotFound,
 });
 
-// Rotas filhas
 const loginRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/login",
@@ -23,12 +22,22 @@ const loginRoute = createRoute({
 
 const dashboardRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: "/dashboard",
+  path: "/",
   component: Dashboard,
 });
 
+const movieDetailsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/movie/$id",
+  component: MovieDetailsPage,
+});
+
 // Monta a árvore de rotas
-const routeTree = rootRoute.addChildren([loginRoute, dashboardRoute]);
+const routeTree = rootRoute.addChildren([
+  loginRoute,
+  dashboardRoute,
+  movieDetailsRoute,
+]);
 
 export const router = createRouter({
   routeTree,

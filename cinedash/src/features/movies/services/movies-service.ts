@@ -1,5 +1,5 @@
 import { TMDB_API_KEY, TMDB_BASE_URL } from "@/shared/config/tmdb";
-import type { MoviesResponse } from "../types/movie";
+import type { MovieDetails, MoviesResponse } from "../types/movie";
 import type { MoviesFilters } from "../types/filters";
 
 interface Params extends MoviesFilters {
@@ -37,6 +37,25 @@ export const moviesService = {
 
     if (!response.ok) {
       throw new Error("Erro ao buscar filmes");
+    }
+
+    return response.json();
+  },
+
+  getById: async (id: string): Promise<MovieDetails> => {
+    const url = new URL(`${TMDB_BASE_URL}/movie/${id}`);
+
+    url.searchParams.append("api_key", TMDB_API_KEY);
+    url.searchParams.append("language", "pt-BR");
+
+    // O pulo do gato: traz elenco e trailers juntos
+    url.searchParams.append("append_to_response", "credits,videos");
+
+    const response = await fetch(url.toString());
+
+    if (!response.ok) {
+      if (response.status === 404) throw new Error("Filme não encontrado");
+      throw new Error("Erro ao buscar detalhes do filme");
     }
 
     return response.json();
