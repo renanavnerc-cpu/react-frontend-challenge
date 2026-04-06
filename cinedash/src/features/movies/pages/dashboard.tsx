@@ -27,8 +27,6 @@ export const Dashboard = () => {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold">🎬 Trending Movies</h1>
-
       <MovieFilters onChange={handleFiltersChange} initialFilters={filters} />
 
       <MoviesList movies={data?.results || []} />
