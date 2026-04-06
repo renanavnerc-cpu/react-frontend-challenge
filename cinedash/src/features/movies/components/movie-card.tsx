@@ -9,7 +9,7 @@ interface Props {
 
 export const MovieCard = ({ movie }: Props) => {
   return (
-    <Card className="overflow-hidden hover:shadow-lg transition">
+    <Card className="overflow-hidden transition shadow-sm hover:shadow-lg dark:hover:shadow-gray-700">
       <img
         src={`${TMDB_IMAGE_URL}${movie.poster_path}`}
         alt={movie.original_title || movie.title}
