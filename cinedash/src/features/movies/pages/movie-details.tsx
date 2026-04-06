@@ -38,7 +38,7 @@ export const MovieDetailsPage = () => {
       <Button
         variant="ghost"
         size="sm"
-        onClick={() => navigate({ to: "/dashboard" })}
+        onClick={() => navigate({ to: "/" })}
         className="hover:bg-secondary transition-colors"
       >
         <ChevronLeft className="mr-2 h-4 w-4" /> Voltar ao Dashboard
