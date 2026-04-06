@@ -1,10 +1,11 @@
 import { useAuthStore } from "@/features/auth/store/auth-store";
 import { useThemeStore } from "../store/theme-store";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, LogOut } from "lucide-react";
 
 export function UserAvatarThemeMenu() {
   const user = useAuthStore((s) => s.user);
+  const logout = useAuthStore((s) => s.logout);
   const theme = useThemeStore((s) => s.theme);
   const setTheme = useThemeStore((s) => s.setTheme);
 
@@ -34,7 +35,7 @@ export function UserAvatarThemeMenu() {
             e.preventDefault();
             setTheme("light");
           }}
-          className="cursor-pointer rounded-sm px-2 py-1.5 text-sm outline-none transition hover:bg-muted"
+          className="cursor-pointer rounded-sm px-2 py-1.5 text-sm outline-none transition hover:bg-muted flex justify-start"
         >
           Claro {theme === "light" ? "✓" : ""}
         </DropdownMenu.Item>
@@ -44,10 +45,23 @@ export function UserAvatarThemeMenu() {
             e.preventDefault();
             setTheme("dark");
           }}
-          className="cursor-pointer rounded-sm px-2 py-1.5 text-sm outline-none transition hover:bg-muted"
+          className="cursor-pointer rounded-sm px-2 py-1.5 text-sm outline-none transition hover:bg-muted flex justify-start"
         >
           Escuro {theme === "dark" ? "✓" : ""}
         </DropdownMenu.Item>
+
+        {user && (
+          <DropdownMenu.Item
+            onSelect={(e) => {
+              e.preventDefault();
+              logout();
+            }}
+            className="cursor-pointer flex items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none transition hover:bg-red-500 hover:text-white justify-start"
+          >
+            <LogOut className="h-4 w-4" />
+            Sair
+          </DropdownMenu.Item>
+        )}
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   );
