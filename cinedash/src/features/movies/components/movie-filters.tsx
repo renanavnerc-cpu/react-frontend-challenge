@@ -47,29 +47,29 @@ export const MovieFilters = ({ onChange, initialFilters }: Props) => {
   return (
     <div className="flex flex-wrap items-center gap-2">
       <div className="flex items-center gap-2 rounded-full border bg-background px-2 py-1">
-          <button
-            type="button"
-            onClick={() => setIsSearchOpen((prev) => !prev)}
-            className="rounded-full p-2 transition hover:bg-accent"
-            aria-label="Abrir busca"
-            aria-expanded={isSearchOpen}
-          >
-            <Search className="h-4 w-4" />
-          </button>
+        <button
+          type="button"
+          onClick={() => setIsSearchOpen((prev) => !prev)}
+          className="rounded-full p-2 transition hover:bg-accent"
+          aria-label="Abrir busca"
+          aria-expanded={isSearchOpen}
+        >
+          <Search className="h-4 w-4" />
+        </button>
 
-          <div
-            className={`overflow-hidden transition-all duration-300 ease-in-out ${
-              isSearchOpen ? "w-64 opacity-100" : "w-0 opacity-0"
-            }`}
-          >
-            <Input
-              placeholder="Pesquisar em CineDash"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="h-9 border-none bg-transparent focus-visible:ring-0"
-            />
-          </div>
+        <div
+          className={`overflow-hidden transition-all duration-300 ease-in-out ${
+            isSearchOpen ? "w-64 opacity-100" : "w-0 opacity-0"
+          }`}
+        >
+          <Input
+            placeholder="Pesquisar em CineDash"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="h-9 border-none bg-transparent focus-visible:ring-0"
+          />
         </div>
+      </div>
 
       <div className="flex min-w-[200px] items-center gap-2 md:min-w-[220px]">
         <label
@@ -82,7 +82,10 @@ export const MovieFilters = ({ onChange, initialFilters }: Props) => {
           value={genre || "all"}
           onValueChange={(value) => setGenre(value === "all" ? "" : value)}
         >
-          <SelectTrigger id="movie-filter-genre" className="min-w-0 w-full flex-1">
+          <SelectTrigger
+            id="movie-filter-genre"
+            className="min-w-0 w-full flex-1"
+          >
             <SelectValue placeholder="Gênero" />
           </SelectTrigger>
 
@@ -108,7 +111,7 @@ export const MovieFilters = ({ onChange, initialFilters }: Props) => {
           value={year || "all"}
           onValueChange={(value) => setYear(value === "all" ? "" : value)}
         >
-          <SelectTrigger id="movie-filter-year" className="min-w-0 w-full flex-1">
+          <SelectTrigger id="movie-filter-year" className="min-w-0 flex-1">
             <SelectValue placeholder="Ano" />
           </SelectTrigger>
 
@@ -134,7 +137,7 @@ export const MovieFilters = ({ onChange, initialFilters }: Props) => {
           value={rating || "all"}
           onValueChange={(value) => setRating(value === "all" ? "" : value)}
         >
-          <SelectTrigger id="movie-filter-rating" className="min-w-0 w-full flex-1">
+          <SelectTrigger id="movie-filter-rating" className="min-w-0 flex-1">
             <SelectValue placeholder="Rating" />
           </SelectTrigger>
 
